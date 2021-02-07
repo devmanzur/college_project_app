@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:snapkart_app/ui/pages/home/home_page.dart';
 import 'package:snapkart_app/ui/pages/login/components/LoginForm.dart';
 import 'package:snapkart_app/ui/pages/register/register_page.dart';
 import 'package:snapkart_app/ui/widgets/gaps.dart';
@@ -20,7 +21,7 @@ class _LoginPageState extends State<LoginPage> {
       body: SafeArea(
         child: SingleChildScrollView(
             child: MyScrollView(
-              crossAxisAlignment: CrossAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Gaps.vGap32,
             Center(
@@ -69,8 +70,9 @@ class _LoginPageState extends State<LoginPage> {
 }
 
 void _onLoginSubmit(String phone, String password) {
-  Get.snackbar("Error!", "Please insert phone number and password",
-      snackPosition: SnackPosition.BOTTOM, margin: EdgeInsets.all(8));
+  // Get.snackbar("Error!", "Please insert phone number and password",
+  //     snackPosition: SnackPosition.BOTTOM, margin: EdgeInsets.all(8));
+  Get.to(HomePage());
 }
 
 void _launchRegisterPage() {

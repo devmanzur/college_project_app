@@ -27,6 +27,7 @@ class CategoryDataProvider {
       Category(15, "Kids Foot ware"),
       Category(16, "Beauty & Wellness"),
       Category(17, "Electronics"),
+      Category(18, "Pet Shop"),
     ];
   }
 }
