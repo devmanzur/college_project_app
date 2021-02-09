@@ -47,6 +47,8 @@ class TextStyles {
       TextStyle(fontSize: Dimens.font_sp16, fontWeight: FontWeight.w600);
   static const TextStyle textBold18 =
       TextStyle(fontSize: Dimens.font_sp18, fontWeight: FontWeight.bold,color: Colors.black87);
+  static const TextStyle textBold18White =
+      TextStyle(fontSize: Dimens.font_sp18, fontWeight: FontWeight.bold,color: Colors.white);
   static const TextStyle textBold24 =
       TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold);
   static const TextStyle textBold26 =

@@ -17,12 +17,12 @@ class AreaDataProvider {
 
   List<Area> getAreas() {
     return [
+      Area(1, 6, "All of Dhaka"),
       Area(1, 1, "Dhanmondi"),
       Area(1, 2, "Mirpur"),
       Area(1, 3, "Uttara"),
       Area(1, 4, "Muhammadpur"),
       Area(1, 5, "Savar"),
-      Area(1, 6, "All of Dhaka"),
       Area(2, 7, "All of Chittagong"),
       Area(2, 8, "Agrabad"),
       Area(2, 9, "Kotowali"),

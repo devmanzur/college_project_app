@@ -72,7 +72,7 @@ class _LoginPageState extends State<LoginPage> {
 void _onLoginSubmit(String phone, String password) {
   // Get.snackbar("Error!", "Please insert phone number and password",
   //     snackPosition: SnackPosition.BOTTOM, margin: EdgeInsets.all(8));
-  Get.to(HomePage());
+  Get.to(HomePage(),transition: Transition.rightToLeft);
 }
 
 void _launchRegisterPage() {
