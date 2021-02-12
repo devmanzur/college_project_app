@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "821802867798",
+    "firebase_url": "https://snapkart-cf28d-default-rtdb.firebaseio.com",
+    "project_id": "snapkart-cf28d",
+    "storage_bucket": "snapkart-cf28d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:821802867798:android:dd1094b4cdff54dac3eff7",
+        "android_client_info": {
+          "package_name": "hahn.applicationprocess.december2020.snapkart_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "821802867798-bjnbauegijbh7fll7iqpe6dtboaeob80.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "hahn.applicationprocess.december2020.snapkart_app",
+            "certificate_hash": "67cf3fcdc53f0039b83a5fd9d27cfc33327d90ab"
+          }
+        },
+        {
+          "client_id": "821802867798-vd8dr528s82pdr7g4dcug33dmo42slbh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDnpomAfhMag8rRN51ipi_KfYh0EQRd-K0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "821802867798-vd8dr528s82pdr7g4dcug33dmo42slbh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
