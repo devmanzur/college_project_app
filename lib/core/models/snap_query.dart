@@ -1,3 +1,5 @@
+import 'package:snapkart_app/application/dto/time_line_item.dart';
+
 class SnapQuery {
   int id;
   int areaId;
@@ -26,4 +28,19 @@ class SnapQuery {
     this.userImageUrl,
     this.location,
   });
+
+  SnapQuery.from(PostResponse response){
+    this.id = response.id;
+    this.areaId = response.areaId;
+    this.cityId = response.cityId;
+    this.description = response.description;
+    this.imageUrl = response.imageUrl;
+    this.categoryId = response.categoryId;
+    this.createdAt = response.createdAt;
+    this.likes = response.likes;
+    this.bids = response.bids;
+    this.createdBy = response.createdBy;
+    this.userImageUrl = response.userImageUrl;
+    this.location = response.location;
+  }
 }

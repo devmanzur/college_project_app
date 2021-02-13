@@ -1,16 +1,20 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:snapkart_app/core/data/area_provider.dart';
-import 'package:snapkart_app/core/data/category_provider.dart';
+import 'package:snapkart_app/application/data/area_provider.dart';
+import 'package:snapkart_app/application/data/category_provider.dart';
 import 'package:snapkart_app/core/models/area.dart';
 import 'package:snapkart_app/core/models/category.dart';
 import 'package:snapkart_app/core/models/city.dart';
+import 'package:snapkart_app/ui/pages/post/post_presenter.dart';
 import 'package:snapkart_app/ui/widgets/custom_button.dart';
 import 'package:snapkart_app/ui/widgets/custom_text_field.dart';
 import 'package:snapkart_app/ui/widgets/gaps.dart';
 import 'package:snapkart_app/ui/widgets/my_scroll_view.dart';
 import 'package:snapkart_app/ui/widgets/select_image.dart';
 import 'package:snapkart_app/utils/styles.dart';
+import 'package:toast/toast.dart';
 
 class CreateQueryPage extends StatefulWidget {
   @override
@@ -26,9 +30,10 @@ class _CreateQueryPageState extends State<CreateQueryPage> {
       .where((element) => element.cityId == 1)
       .toList();
   var _selectedArea = AreaDataProvider().getAreas()[0];
-
+  var presenter = PostPresenter();
   List<Category> categories = CategoryDataProvider().getCategories();
   Category _selectedCategory = CategoryDataProvider().getCategories().first;
+  File _imageFile;
 
   @override
   Widget build(BuildContext context) {
@@ -48,13 +53,13 @@ class _CreateQueryPageState extends State<CreateQueryPage> {
               margin: EdgeInsets.all(16),
               height: Get.width / 2,
               width: Get.width,
-              child: SelectImageHolder()),
+              child: SelectImageHolder(_onImageSelected)),
           Gaps.vGap8,
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
-                width: Get.width/2.5,
+                width: Get.width / 2.5,
                 child: DropdownButtonHideUnderline(
                   child: DropdownButton(
                       isExpanded: true,
@@ -69,7 +74,7 @@ class _CreateQueryPageState extends State<CreateQueryPage> {
               ),
               Gaps.hGap16,
               Container(
-                width: Get.width/2.5,
+                width: Get.width / 2.5,
                 child: DropdownButtonHideUnderline(
                   child: DropdownButton(
                       isExpanded: true,
@@ -177,6 +182,31 @@ class _CreateQueryPageState extends State<CreateQueryPage> {
     return items;
   }
 
+  void _onSubmitPressed() {
+    var details = _descriptionController.text;
+    if (_selectedCity == null ||
+        _selectedArea == null ||
+        _selectedCategory == null ||
+        _imageFile == null ||
+        details.isEmpty) {
+      Toast.show("Please fill all required fields.", context);
+      return;
+    }
 
-  void _onSubmitPressed() {}
+    createPost(details);
+  }
+
+  _onImageSelected(File file) {
+    _imageFile = file;
+  }
+
+  void createPost(String details) async {
+    var response = await presenter.createPost(details,_imageFile,_selectedCategory.id,_selectedArea.id,_selectedCity.id,[1,2]);
+    if (response.isSuccess) {
+      Toast.show("Your post has been submitted!", context);
+      Get.back();
+    } else {
+      Toast.show(response.errorMessage, context);
+    }
+  }
 }

@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:snapkart_app/core/data/query_provider.dart';
 import 'package:snapkart_app/core/models/bid.dart';
 import 'package:snapkart_app/core/models/snap_query.dart';
-import 'package:snapkart_app/ui/pages/create_bid/create_bid_page.dart';
 import 'package:snapkart_app/ui/pages/details/components/bid_item.dart';
 import 'package:snapkart_app/ui/pages/home/components/feed_item.dart';
+import 'package:snapkart_app/ui/pages/home/home_presenter.dart';
+import 'package:snapkart_app/ui/pages/post/create_bid/create_bid_page.dart';
 import 'package:snapkart_app/ui/widgets/my_scroll_view.dart';
 import 'package:snapkart_app/utils/styles.dart';
+import 'package:toast/toast.dart';
 
 class DetailsPage extends StatefulWidget {
   final SnapQuery query;
@@ -19,14 +20,33 @@ class DetailsPage extends StatefulWidget {
 }
 
 class _DetailsPageState extends State<DetailsPage> {
-  List<Bid> _bids = QueryProvider().getBids();
+  List<Bid> _bids = List<Bid>();
+  var presenter = HomePresenter();
+
+  @override
+  void initState() {
+    loadBids();
+  }
+
+  Future loadBids() async {
+    var response = await presenter.getBids(widget.query.id);
+    if (response != null && response.value.length > 0) {
+      var bids = response.value.map((e) => Bid.from(e)).toList();
+      setState(() {
+        _bids = bids;
+      });
+    }else{
+      Toast.show("No data found!", context);
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          widget.query.description.substring(0,6).toString()+"...",
+          widget.query.description.substring(0, 6).toString() + "...",
           style: TextStyles.textBold18White,
         ),
         centerTitle: true,
@@ -41,7 +61,7 @@ class _DetailsPageState extends State<DetailsPage> {
       ),
       body: MyScrollView(
         children: [
-          FeedItem(widget.query, null),
+          FeedItem(widget.query, null, null, null),
           ListView.builder(
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
@@ -57,11 +77,11 @@ class _DetailsPageState extends State<DetailsPage> {
   _onBidClick(Bid bid) {
     Get.snackbar("Accept?", bid.price.toString());
   }
-}
 
-void _openBidScreen() {
-  Get.to(CreateBidPage(),
-      opaque: true,
-      transition: Transition.rightToLeftWithFade,
-      fullscreenDialog: true);
+  void _openBidScreen() {
+    Get.to(CreateBidPage(widget.query),
+        opaque: true,
+        transition: Transition.rightToLeftWithFade,
+        fullscreenDialog: true);
+  }
 }

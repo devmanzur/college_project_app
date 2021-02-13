@@ -1,7 +1,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:qpay/res/resources.dart';
+import 'package:snapkart_app/ui/widgets/gaps.dart';
 
 class ProgressDialog extends Dialog {
 

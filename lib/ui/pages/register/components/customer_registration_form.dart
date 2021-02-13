@@ -72,7 +72,7 @@ class CustomerRegistrationFrom extends StatelessWidget {
         CustomButton(
           key: const Key('register'),
           onPressed: (){
-            onRegisterSubmit(_nameController.text,_phoneController.text,_addressController.text,_passwordController.text);
+            onRegisterSubmit(_nameController.text,_phoneController.text,_addressController.text,_passwordController.text,_passwordConfirmController.text);
           },
           text: "Register",
         ),

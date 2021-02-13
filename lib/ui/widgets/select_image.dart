@@ -5,6 +5,10 @@ import 'package:image_picker/image_picker.dart';
 import 'package:snapkart_app/ui/widgets/upload_image_place_holder.dart';
 
 class SelectImageHolder extends StatefulWidget {
+  final Function onImageSelected;
+
+  SelectImageHolder(this.onImageSelected);
+
   @override
   _SelectImageHolderState createState() => _SelectImageHolderState();
 }
@@ -18,7 +22,12 @@ class _SelectImageHolderState extends State<SelectImageHolder> {
     return Scaffold(
       body: Center(
         child: GestureDetector(
-          child: _image == null ? UploadImagePlaceHolder() : Image.file(_image,fit: BoxFit.cover,),
+          child: _image == null
+              ? UploadImagePlaceHolder()
+              : Image.file(
+                  _image,
+                  fit: BoxFit.cover,
+                ),
           onTap: _imgFromGallery,
         ),
       ),
@@ -31,6 +40,7 @@ class _SelectImageHolderState extends State<SelectImageHolder> {
     setState(() {
       if (pickedFile != null) {
         _image = File(pickedFile.path);
+        widget.onImageSelected(_image);
       } else {
         print('No image selected.');
       }

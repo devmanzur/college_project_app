@@ -1,10 +1,14 @@
-import 'package:flutter_commerce/core/repository/firebase_repo.dart';
-import 'package:flutter_commerce/core/service/api.dart';
 import 'package:get_it/get_it.dart';
+import 'package:snapkart_app/application/brokers/api_broker.dart';
+import 'package:snapkart_app/application/services/core_data_service.dart';
+import 'package:snapkart_app/application/services/image_storage_service.dart';
+import 'package:snapkart_app/ui/pages/login/login_presenter.dart';
 
-GetIt locator = GetIt.instance;
+GetIt locator = GetIt();
 
 void setupLocator() {
-  locator.registerLazySingleton(() => Api('products'));
-  locator.registerLazySingleton(() => FirebaseRepository()) ;
+  locator.registerSingleton(CoreDataService());
+  locator.registerLazySingleton(() => ImageStorageService());
+  locator.registerLazySingleton(() => ApiBroker());
+  locator.registerFactory<LoginPresenter>(() => LoginPresenter());
 }

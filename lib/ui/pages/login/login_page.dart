@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:snapkart_app/application/data/core_data_provider.dart';
+import 'package:snapkart_app/application/locator.dart';
+import 'package:snapkart_app/application/services/core_data_service.dart';
 import 'package:snapkart_app/ui/pages/home/home_page.dart';
 import 'package:snapkart_app/ui/pages/login/components/LoginForm.dart';
+import 'package:snapkart_app/ui/pages/login/login_presenter.dart';
 import 'package:snapkart_app/ui/pages/register/register_page.dart';
 import 'package:snapkart_app/ui/widgets/gaps.dart';
 import 'package:snapkart_app/ui/widgets/load_image.dart';
 import 'package:snapkart_app/ui/widgets/my_scroll_view.dart';
 import 'package:snapkart_app/utils/styles.dart';
+import 'package:toast/toast.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -14,6 +19,28 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  var coreDataService = locator<CoreDataService>();
+  var presenter = LoginPresenter();
+
+  showLoaderDialog(BuildContext context) {
+    AlertDialog alert = AlertDialog(
+      content: new Row(
+        children: [
+          CircularProgressIndicator(),
+          Container(
+              margin: EdgeInsets.only(left: 7), child: Text("Loading...")),
+        ],
+      ),
+    );
+    showDialog(
+      barrierDismissible: false,
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,22 +50,13 @@ class _LoginPageState extends State<LoginPage> {
             child: MyScrollView(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Gaps.vGap32,
+            Gaps.vGap50,
             Center(
               child: Container(
-                  width: 160, height: 100, child: LoadAssetImage('logo')),
-            ),
-            Text(
-              "Welcome back!",
-              style: TextStyles.textBold26,
+                  width: 200, height: 200, child: LoadAssetImage('logo')),
             ),
             Gaps.vGap8,
-            Text(
-              "We are so excited to see you again!",
-              style: TextStyles.textGray14,
-            ),
-            Gaps.vGap8,
-            LoginForm(_onLoginSubmit),
+            LoginForm(_onLoginButtonPressed),
             Gaps.vGap4,
             Container(
               margin: EdgeInsets.only(left: 16),
@@ -67,14 +85,33 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
   }
-}
 
-void _onLoginSubmit(String phone, String password) {
-  // Get.snackbar("Error!", "Please insert phone number and password",
-  //     snackPosition: SnackPosition.BOTTOM, margin: EdgeInsets.all(8));
-  Get.to(HomePage(),transition: Transition.rightToLeft);
+  @override
+  void initState() {
+    setupBaseUrl();
+  }
+
+  void setupBaseUrl() async {
+    var url = await coreDataService.getBaseUrl();
+    CoreDataProvider().setBaseUrl(url);
+  }
+
+  void _onLoginButtonPressed(String phone, String password) async {
+    if (phone.isEmpty || password.isEmpty) {
+      Toast.show("Invalid phone number/ pin", context);
+      return;
+    }
+
+    var login = await presenter.userLogin(phone, password);
+    if (login.isSuccess) {
+      Toast.show("successfully logged in", context);
+      Get.to(()=>HomePage(), transition: Transition.rightToLeft);
+    } else {
+      Toast.show(login.errorMessage, context);
+    }
+  }
 }
 
 void _launchRegisterPage() {
-  Get.to(RegisterPage(), transition: Transition.leftToRight);
+  Get.to(() => RegisterPage(), transition: Transition.leftToRight);
 }

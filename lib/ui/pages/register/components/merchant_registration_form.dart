@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:multi_select_flutter/dialog/multi_select_dialog_field.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
-import 'package:snapkart_app/core/data/area_provider.dart';
-import 'package:snapkart_app/core/data/category_provider.dart';
+import 'package:snapkart_app/application/data/area_provider.dart';
+import 'package:snapkart_app/application/data/category_provider.dart';
 import 'package:snapkart_app/core/models/area.dart';
 import 'package:snapkart_app/core/models/category.dart';
 import 'package:snapkart_app/core/models/city.dart';
@@ -199,7 +199,7 @@ class _MerchantRegistrationFormState extends State<MerchantRegistrationForm> {
           key: const Key('register'),
           onPressed: () {
             widget.onRegisterSubmit(_nameController.text, _phoneController.text,
-                _addressController.text, _passwordController.text,_selectedCity,_selectedArea,_selectedCategories);
+                _addressController.text, _passwordController.text,_passwordConfirmController.text,_selectedCity,_selectedArea,_selectedCategories);
           },
           text: "Register",
         ),

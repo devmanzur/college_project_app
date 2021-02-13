@@ -10,8 +10,10 @@ import 'package:snapkart_app/utils/styles.dart';
 class FeedItem extends StatelessWidget {
   final SnapQuery query;
   final Function _onItemClick;
+  final Function _onLikeButtonClicked;
+  final Function _onBidButtonClick;
 
-  FeedItem(this.query, this._onItemClick);
+  FeedItem(this.query, this._onItemClick, this._onLikeButtonClicked, this._onBidButtonClick);
 
   @override
   Widget build(BuildContext context) {
@@ -85,8 +87,10 @@ class FeedItem extends StatelessWidget {
   }
 
   _onLikeClicked() {
-    Get.snackbar("Liked!", "You liked this post by " + query.createdBy);
+    _onLikeButtonClicked(query);
   }
 
-  _onBidClicked() {}
+  _onBidClicked() {
+    _onBidButtonClick(query);
+  }
 }
