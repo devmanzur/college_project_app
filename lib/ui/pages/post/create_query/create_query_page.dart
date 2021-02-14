@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:screen_loader/screen_loader.dart';
 import 'package:snapkart_app/application/data/area_provider.dart';
 import 'package:snapkart_app/application/data/category_provider.dart';
 import 'package:snapkart_app/core/models/area.dart';
@@ -21,7 +22,8 @@ class CreateQueryPage extends StatefulWidget {
   _CreateQueryPageState createState() => _CreateQueryPageState();
 }
 
-class _CreateQueryPageState extends State<CreateQueryPage> {
+class _CreateQueryPageState extends State<CreateQueryPage>
+    with ScreenLoader<CreateQueryPage> {
   final _descriptionController = TextEditingController();
   List<City> cities = AreaDataProvider().getCities();
   var _selectedCity = AreaDataProvider().getCities()[0];
@@ -36,7 +38,7 @@ class _CreateQueryPageState extends State<CreateQueryPage> {
   File _imageFile;
 
   @override
-  Widget build(BuildContext context) {
+  Widget screen(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -54,6 +56,16 @@ class _CreateQueryPageState extends State<CreateQueryPage> {
               height: Get.width / 2,
               width: Get.width,
               child: SelectImageHolder(_onImageSelected)),
+          Gaps.vGap8,
+          Row(
+            children: [
+              Gaps.hGap12,
+              Text(
+                "Select Location",
+                style: TextStyles.textStrong14,
+              ),
+            ],
+          ),
           Gaps.vGap8,
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -90,6 +102,16 @@ class _CreateQueryPageState extends State<CreateQueryPage> {
             ],
           ),
           Gaps.vGap8,
+          Row(
+            children: [
+              Gaps.hGap12,
+              Text(
+                "Select Category",
+                style: TextStyles.textStrong14,
+              ),
+            ],
+          ),
+          Gaps.vGap8,
           DropdownButtonHideUnderline(
             child: DropdownButton(
                 isExpanded: true,
@@ -104,7 +126,7 @@ class _CreateQueryPageState extends State<CreateQueryPage> {
           Gaps.vGap12,
           CustomTextField(
             controller: _descriptionController,
-            hintText: "Describe your offer",
+            hintText: "Describe your requirement",
           ),
           Gaps.vGap16,
           CustomButton(
@@ -182,7 +204,7 @@ class _CreateQueryPageState extends State<CreateQueryPage> {
     return items;
   }
 
-  void _onSubmitPressed() {
+  void _onSubmitPressed() async {
     var details = _descriptionController.text;
     if (_selectedCity == null ||
         _selectedArea == null ||
@@ -193,7 +215,7 @@ class _CreateQueryPageState extends State<CreateQueryPage> {
       return;
     }
 
-    createPost(details);
+    await this.performFuture(() => createPost(details));
   }
 
   _onImageSelected(File file) {
@@ -201,7 +223,8 @@ class _CreateQueryPageState extends State<CreateQueryPage> {
   }
 
   void createPost(String details) async {
-    var response = await presenter.createPost(details,_imageFile,_selectedCategory.id,_selectedArea.id,_selectedCity.id,[1,2]);
+    var response = await presenter.createPost(details, _imageFile,
+        _selectedCategory.id, _selectedArea.id, _selectedCity.id, [1, 2]);
     if (response.isSuccess) {
       Toast.show("Your post has been submitted!", context);
       Get.back();

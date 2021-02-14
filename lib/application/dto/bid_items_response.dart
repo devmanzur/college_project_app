@@ -64,7 +64,7 @@ class BidItemBody {
   String _description;
   String _createdBy;
   String _userImageUrl;
-  double _price;
+  num _price;
   int _id;
 
   String get createdAt => _createdAt;
@@ -72,7 +72,7 @@ class BidItemBody {
   String get description => _description;
   String get createdBy => _createdBy;
   String get userImageUrl => _userImageUrl;
-  double get price => _price;
+  num get price => _price;
   int get id => _id;
 
   BidItemBody({

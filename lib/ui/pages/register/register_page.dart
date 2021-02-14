@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:screen_loader/screen_loader.dart';
 import 'package:snapkart_app/core/models/area.dart';
 import 'package:snapkart_app/core/models/category.dart';
 import 'package:snapkart_app/core/models/city.dart';
@@ -17,12 +18,12 @@ class RegisterPage extends StatefulWidget {
   _RegisterPageState createState() => _RegisterPageState();
 }
 
-class _RegisterPageState extends State<RegisterPage> {
+class _RegisterPageState extends State<RegisterPage> with ScreenLoader<RegisterPage> {
   bool _isVendor = false;
   var presenter = RegisterPresenter();
 
   @override
-  Widget build(BuildContext context) {
+  Widget screen(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -66,7 +67,7 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
   void _onCustomerRegisterSubmit(String name, String phone, String address,
-      String password, String confirmPassword) {
+      String password, String confirmPassword) async{
     if (name.isEmpty || phone.isEmpty || address.isEmpty || password.isEmpty) {
       Get.snackbar(
           "Error!", "Please insert phone number, name, address, password",
@@ -80,7 +81,7 @@ class _RegisterPageState extends State<RegisterPage> {
       return;
     }
 
-    registerCustomer(name, phone, address, password);
+    await this.performFuture(()=>registerCustomer(name, phone, address, password));
   }
 
   void _onMerchantSubmit(
@@ -91,7 +92,7 @@ class _RegisterPageState extends State<RegisterPage> {
       String confirmPassword,
       City city,
       Area area,
-      List<Category> categories) {
+      List<Category> categories) async{
     if (name.isEmpty ||
         phone.isEmpty ||
         address.isEmpty ||
@@ -111,7 +112,7 @@ class _RegisterPageState extends State<RegisterPage> {
       return;
     }
 
-    registerMerchant(name, phone, address, password, city, area, categories);
+    await this.performFuture(()=>registerMerchant(name, phone, address, password, city, area, categories));
   }
 
   void registerCustomer(

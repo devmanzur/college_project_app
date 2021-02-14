@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:screen_loader/screen_loader.dart';
 import 'package:snapkart_app/application/data/core_data_provider.dart';
 import 'package:snapkart_app/application/locator.dart';
 import 'package:snapkart_app/application/services/core_data_service.dart';
@@ -18,7 +19,7 @@ class LoginPage extends StatefulWidget {
   _LoginPageState createState() => _LoginPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _LoginPageState extends State<LoginPage> with ScreenLoader<LoginPage> {
   var coreDataService = locator<CoreDataService>();
   var presenter = LoginPresenter();
 
@@ -42,7 +43,7 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget screen(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
@@ -102,7 +103,11 @@ class _LoginPageState extends State<LoginPage> {
       return;
     }
 
-    var login = await presenter.userLogin(phone, password);
+    await this.performFuture(()=>loginWithCredentials(phone, password));
+  }
+
+  Future loginWithCredentials(String phone, String password) async {
+     var login = await presenter.userLogin(phone, password);
     if (login.isSuccess) {
       Toast.show("successfully logged in", context);
       Get.to(()=>HomePage(), transition: Transition.rightToLeft);

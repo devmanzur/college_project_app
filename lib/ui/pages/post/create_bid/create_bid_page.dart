@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:screen_loader/screen_loader.dart';
 import 'package:snapkart_app/core/models/snap_query.dart';
 import 'package:snapkart_app/ui/pages/post/post_presenter.dart';
 import 'package:snapkart_app/ui/widgets/custom_button.dart';
@@ -21,14 +22,15 @@ class CreateBidPage extends StatefulWidget {
   _CreateBidPageState createState() => _CreateBidPageState();
 }
 
-class _CreateBidPageState extends State<CreateBidPage> {
+class _CreateBidPageState extends State<CreateBidPage>
+    with ScreenLoader<CreateBidPage> {
   var presenter = PostPresenter();
   final _descriptionController = TextEditingController();
   final _priceController = TextEditingController();
   File _imageFile;
 
   @override
-  Widget build(BuildContext context) {
+  Widget screen(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -67,14 +69,14 @@ class _CreateBidPageState extends State<CreateBidPage> {
     );
   }
 
-  void _onSubmitPressed() {
+  void _onSubmitPressed() async {
     var price = _priceController.text;
     var details = _descriptionController.text;
     if (price.isEmpty || details.isEmpty || _imageFile == null) {
       Toast.show("Please input all data", context);
       return;
     }
-    makeBid(price, details);
+    await this.performFuture(() => makeBid(price, details));
   }
 
   void _onImageSelected(File image) {

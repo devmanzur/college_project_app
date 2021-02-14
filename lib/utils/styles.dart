@@ -30,7 +30,7 @@ class TextStyles {
       TextStyle(fontSize: Dimens.font_sp12, fontWeight: FontWeight.bold);
 
   static const TextStyle textStrong14 =
-      TextStyle(fontSize: Dimens.font_sp14, fontWeight: FontWeight.w500);
+      TextStyle(fontSize: Dimens.font_sp14, fontWeight: FontWeight.w600);
   static const TextStyle textStrong16 = TextStyle(
     fontSize: Dimens.font_sp16,
     fontWeight: FontWeight.w700,

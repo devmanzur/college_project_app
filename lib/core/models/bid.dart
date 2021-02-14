@@ -5,7 +5,7 @@ class Bid {
   String createdAt;
   String imageUrl;
   String description;
-  double price;
+  num price;
   String createdBy;
   String userImageUrl;
 

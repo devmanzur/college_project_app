@@ -24,6 +24,13 @@ class ApiBroker {
       return Result.error("failed to complete action", response.statusCode);
     } catch (error) {
       if (error is DioError) {
+
+        if(error.response.statusCode == 500){
+          return Result.error("failed to complete action", 500);
+        }else if(error.response.statusCode == 401 || error.response.statusCode ==403){
+          return Result.error("Action not allowed", 500);
+        }
+
         var errorResponse = ApiResponse.fromJson(error.response.data);
         var message = errorResponse.errors?.first?.errorMessage;
         return Result.error(message, error.response.statusCode);

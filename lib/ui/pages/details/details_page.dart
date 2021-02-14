@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:screen_loader/screen_loader.dart';
 import 'package:snapkart_app/core/models/bid.dart';
 import 'package:snapkart_app/core/models/snap_query.dart';
 import 'package:snapkart_app/ui/pages/details/components/bid_item.dart';
@@ -19,7 +20,7 @@ class DetailsPage extends StatefulWidget {
   _DetailsPageState createState() => _DetailsPageState();
 }
 
-class _DetailsPageState extends State<DetailsPage> {
+class _DetailsPageState extends State<DetailsPage> with ScreenLoader<DetailsPage> {
   List<Bid> _bids = List<Bid>();
   var presenter = HomePresenter();
 
@@ -29,6 +30,10 @@ class _DetailsPageState extends State<DetailsPage> {
   }
 
   Future loadBids() async {
+    await this.performFuture(() => fetchBids());
+  }
+
+  Future fetchBids() async {
     var response = await presenter.getBids(widget.query.id);
     if (response != null && response.value.length > 0) {
       var bids = response.value.map((e) => Bid.from(e)).toList();
@@ -36,13 +41,13 @@ class _DetailsPageState extends State<DetailsPage> {
         _bids = bids;
       });
     }else{
-      Toast.show("No data found!", context);
+      // Toast.show("", context);
     }
   }
 
 
   @override
-  Widget build(BuildContext context) {
+  Widget screen(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(

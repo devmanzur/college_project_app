@@ -22,12 +22,15 @@ class _SelectImageHolderState extends State<SelectImageHolder> {
     return Scaffold(
       body: Center(
         child: GestureDetector(
-          child: _image == null
-              ? UploadImagePlaceHolder()
-              : Image.file(
-                  _image,
-                  fit: BoxFit.cover,
-                ),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(8.0),
+            child: _image == null
+                ? UploadImagePlaceHolder()
+                : Image.file(
+                    _image,
+                    fit: BoxFit.cover,
+                  ),
+          ),
           onTap: _imgFromGallery,
         ),
       ),

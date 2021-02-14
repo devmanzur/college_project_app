@@ -145,7 +145,10 @@ class _MerchantRegistrationFormState extends State<MerchantRegistrationForm> {
           chipDisplay: MultiSelectChipDisplay.none(),
           initialValue: _selectedCategories,
           title: Text("Categories"),
-          items: CategoryDataProvider().getCategories().map((e) => MultiSelectItem(e, e.name)).toList(),
+          items: CategoryDataProvider()
+              .getCategories()
+              .map((e) => MultiSelectItem(e, e.name))
+              .toList(),
           listType: MultiSelectListType.CHIP,
           searchable: true,
           onConfirm: (values) {
@@ -198,8 +201,15 @@ class _MerchantRegistrationFormState extends State<MerchantRegistrationForm> {
         CustomButton(
           key: const Key('register'),
           onPressed: () {
-            widget.onRegisterSubmit(_nameController.text, _phoneController.text,
-                _addressController.text, _passwordController.text,_passwordConfirmController.text,_selectedCity,_selectedArea,_selectedCategories);
+            widget.onRegisterSubmit(
+                _nameController.text,
+                _phoneController.text,
+                _addressController.text,
+                _passwordController.text,
+                _passwordConfirmController.text,
+                _selectedCity,
+                _selectedArea,
+                _selectedCategories);
           },
           text: "Register",
         ),

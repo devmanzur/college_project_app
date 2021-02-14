@@ -33,12 +33,15 @@ class FeedItem extends StatelessWidget {
                 Container(
                   height: MediaQuery.of(context).size.width * 0.5,
                   width: MediaQuery.of(context).size.width,
-                  child: CachedNetworkImage(
-                    imageUrl: query.imageUrl,
-                    fit: BoxFit.cover,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(8.0),
+                    child: CachedNetworkImage(
+                      imageUrl: query.imageUrl,
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 ),
-                Gaps.vGap8,
+                Gaps.vGap12,
                 Text(
                   query.description,
                   style: TextStyles.textSize12,
