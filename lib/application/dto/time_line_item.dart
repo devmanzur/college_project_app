@@ -71,6 +71,7 @@ class PostResponse {
   String _description;
   String _imageUrl;
   int _categoryId;
+  int _acceptedBidId;
   String _createdAt;
   int _likes;
   int _bids;
@@ -84,6 +85,7 @@ class PostResponse {
   String get description => _description;
   String get imageUrl => _imageUrl;
   int get categoryId => _categoryId;
+  int get acceptedBidId => _acceptedBidId;
   String get createdAt => _createdAt;
   int get likes => _likes;
   int get bids => _bids;
@@ -125,6 +127,7 @@ class PostResponse {
     _description = json["description"];
     _imageUrl = json["imageUrl"];
     _categoryId = json["categoryId"];
+    _acceptedBidId = json["acceptedBidId"];
     _createdAt = json["createdAt"];
     _likes = json["likes"];
     _bids = json["bids"];

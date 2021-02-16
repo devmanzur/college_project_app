@@ -110,7 +110,7 @@ class _LoginPageState extends State<LoginPage> with ScreenLoader<LoginPage> {
      var login = await presenter.userLogin(phone, password);
     if (login.isSuccess) {
       Toast.show("successfully logged in", context);
-      Get.to(()=>HomePage(), transition: Transition.rightToLeft);
+      Get.offAll(()=>HomePage(), transition: Transition.rightToLeft);
     } else {
       Toast.show(login.errorMessage, context);
     }

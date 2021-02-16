@@ -80,8 +80,8 @@ class FeedItem extends StatelessWidget {
           Row(
             children: [
               MyIconButton("like", "Like", _onLikeClicked),
-              Gaps.hGap16,
-              MyIconButton("bid", "Bid", _onBidClicked),
+              // Gaps.hGap16,
+              // MyIconButton("bid", "Bid", _onBidClicked),
             ],
           )
         ]),

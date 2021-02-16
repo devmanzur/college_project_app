@@ -142,7 +142,7 @@ class _MerchantRegistrationFormState extends State<MerchantRegistrationForm> {
         MultiSelectDialogField(
           buttonText: Text("Select Categories"),
           buttonIcon: Icon(Icons.arrow_drop_down),
-          chipDisplay: MultiSelectChipDisplay.none(),
+          chipDisplay: MultiSelectChipDisplay<Category>.none(),
           initialValue: _selectedCategories,
           title: Text("Categories"),
           items: CategoryDataProvider()
@@ -151,9 +151,7 @@ class _MerchantRegistrationFormState extends State<MerchantRegistrationForm> {
               .toList(),
           listType: MultiSelectListType.CHIP,
           searchable: true,
-          onConfirm: (values) {
-            _selectedCategories = values;
-          },
+          onConfirm: _onCategoriesSelected,
         ),
         Gaps.vGap12,
         CustomTextField(
@@ -225,5 +223,9 @@ class _MerchantRegistrationFormState extends State<MerchantRegistrationForm> {
         .where((element) => element.cityId == _selectedCity.id)
         .toList();
     _selectedArea = areas[0];
+  }
+
+  void _onCategoriesSelected(List<Category> categories) {
+    _selectedCategories = categories;
   }
 }

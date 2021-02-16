@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="hahn.applicationprocess.december2020.snapkart_app">
    <application
-        android:label="snapkart_app"
+        android:label="Snap Kart"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

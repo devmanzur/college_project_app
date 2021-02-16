@@ -24,10 +24,10 @@ class ApiBroker {
       return Result.error("failed to complete action", response.statusCode);
     } catch (error) {
       if (error is DioError) {
-
-        if(error.response.statusCode == 500){
+        if (error.response?.statusCode == 500) {
           return Result.error("failed to complete action", 500);
-        }else if(error.response.statusCode == 401 || error.response.statusCode ==403){
+        } else if (error.response.statusCode == 401 ||
+            error.response.statusCode == 403) {
           return Result.error("Action not allowed", 500);
         }
 
@@ -41,13 +41,14 @@ class ApiBroker {
   }
 
   Future<Result<Map<String, dynamic>>> fetch(String url,
-      [bool authenticationRequired = false]) async {
+      {Map<String, dynamic> queryParameters,
+      bool authenticationRequired = false}) async {
     try {
       if (authenticationRequired) {
         setTokenHeader();
       }
 
-      var response = await dio.get(url);
+      var response = await dio.get(url,queryParameters: queryParameters);
       if (response.statusCode == 200) {
         var data = response.data;
         return Result.ok<Map<String, dynamic>>(data);

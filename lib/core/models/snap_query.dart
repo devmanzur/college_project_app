@@ -7,6 +7,7 @@ class SnapQuery {
   String description;
   String imageUrl;
   int categoryId;
+  int acceptedBidId;
   String createdAt;
   int likes;
   int bids;
@@ -36,6 +37,7 @@ class SnapQuery {
     this.description = response.description;
     this.imageUrl = response.imageUrl;
     this.categoryId = response.categoryId;
+    this.acceptedBidId = response.acceptedBidId;
     this.createdAt = response.createdAt;
     this.likes = response.likes;
     this.bids = response.bids;

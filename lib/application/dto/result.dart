@@ -2,7 +2,7 @@ class Result<T> {
   final String errorMessage;
   final int code;
   final T value;
-  final isSuccess;
+  final bool isSuccess;
 
   Result(this.errorMessage, this.code, this.value, this.isSuccess);
 
